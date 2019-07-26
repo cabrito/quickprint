@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name     			Colleague Quick Skip
-// @author				cabrito
-// @description 	Removes the requirement of Colleague UI to go through Adobe Reader to print.
+// @name     			Colleague Quick Print
+// @author			cabrito
+// @description 		Removes the requirement of Colleague UI to go through Adobe Reader to print.
 // @version  			1
 // @include  			<<URL TO YOUR COLLEAGUE SERVER HERE>>
 // @require 			https://code.jquery.com/jquery-2.2.4.min.js
