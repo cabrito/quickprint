@@ -2,38 +2,44 @@
 // @name     			Colleague Quick Print
 // @author			cabrito
 // @description 		Removes the requirement of Colleague UI to go through Adobe Reader to print.
-// @version  			1
-// @include  			<<URL TO YOUR COLLEAGUE SERVER HERE>>
+// @version  			1.1
+// @include  			<<LINK TO YOUR COLLEAGUE SERVER GOES HERE>>
 // @require 			https://code.jquery.com/jquery-2.2.4.min.js
 // @grant    			none
 // ==/UserScript==
 
-/* Handles changes to the document appropriately  */
+/**
+ *  The core of the logic to make appropriate changes to the document.
+ */
 var observer = new MutationObserver(
 function (mutations, mi)
 {
-    // If the Print Remote button exists, remove it and adjust the Save As dialog to say Quick Print
+    // If the Print Remote button exists, remove it and adjust the Save As dialog to say Quick Print.
     if ($("#reportPrint").length > 0)
     {
         $("#reportPrint").remove();
         $("#reportSaveAs").text("Quick Print");
     }
 
-    // Create new functionality for the big Download button
+    // Create new functionality for the big Download button.
     if ($("#fileDownloadBtn").length > 0)
     {
-        console.log("Download button detected!");
         var url = $("#fileDownloadBtn").attr("href");
-        var adjustedBtn = $("#fileDownloadBtn").clone()
-                                                    .attr("id", "quickPrint")
-                                                    .attr("href", null)
-                                                    .attr("class", "esg-button-style esg-button esg-button--primary")
-                                                    .attr("type", "button");
+
+        // Only make a new button if we're in the 'Save As' dialog.
         if (!isPdf(url))
         {
+            var adjustedBtn = $("#fileDownloadBtn").clone()
+                                        .attr("id", "quickPrint")
+                                        .attr("href", null)
+                                        .attr("class", "esg-button-style esg-button esg-button--primary")
+                                        .attr("type", "button");
             $(adjustedBtn).text("Quick Print");
             $("#fileDownloadBtn").replaceWith(adjustedBtn);
             adjustedBtn.on("click", function () { quickPrint(url); });
+
+            // PRINT IMMEDIATELY!!! The button solely exists as a failsafe.
+            quickPrint(url);
         }
     }
 
@@ -50,19 +56,27 @@ function (mutations, mi)
     }
 });
 
+/**
+ *  Heart of the logic for printing data from the Colleague server. Does so by
+ *  downloading data via a given URL and putting it into an iframe and calling
+ *  the browser's print() function.
+ *  @param fileUrl  A URL provided as a string. 
+ */
 function quickPrint(fileUrl)
 {
-    // Now, make the iframe and print it
+    // Make the iframe...
     $("<iframe>", {
         id:  "dataWindow",
         frameborder: 0
     }).appendTo("body");
-
     var iframe = $("#dataWindow");
+
+    // Get the data...
     $.get(fileUrl, function(data)
     {
         $(iframe).ready(function ()
         {
+            // Put the data into the iframe. Thankfully, <pre> is available for displaying fixed-width text data.
             $("<pre>", {
                 id:  "textData",
                 style: "border: none",
@@ -75,13 +89,18 @@ function quickPrint(fileUrl)
     }, 'text');
 }
 
+/**
+ *  Decides whether the API URL refers to a PDF or not.
+ *  @param  url A URL provided as a string.
+ *  @return     boolean
+ */
 function isPdf(url)
 {
     var extension = url.substring(url.lastIndexOf('.') + 1, url.lastIndexOf('?') );
     return (extension === "pdf");
 }
 
-/* Begin observation */
+/* Begin document observation */
 observer.observe(document,	{
                                 childList: true,
                                 subtree: true
