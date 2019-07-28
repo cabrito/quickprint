@@ -35,4 +35,4 @@ The goal of this script is to be as responsive and simple as possible for future
 
 <img src="img/po.png" />
 
-Change this option to "None". Invoices will no longer display the unsightly "`about:blank`" tag. 
+Change this option to "--blank--". Invoices will no longer display the unsightly "`about:blank`" tag. 
