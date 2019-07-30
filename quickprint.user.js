@@ -2,11 +2,20 @@
 // @name     			Colleague Quick Print
 // @author			cabrito
 // @description 		Removes the requirement of Colleague UI to go through Adobe Reader to print.
-// @version  			1.1
-// @include  			<<LINK TO YOUR COLLEAGUE SERVER GOES HERE>>
+// @version  			1.2
+// @updateURL			https://github.com/cabrito/quickprint/raw/master/quickprint.user.js
+// @downloadURL			https://github.com/cabrito/quickprint/raw/master/quickprint.user.js
+// @include  			https://*.edu/UI/home/*
 // @require 			https://code.jquery.com/jquery-2.2.4.min.js
 // @grant    			none
 // ==/UserScript==
+
+/*************************************************************************************
+ *
+ * SPECIAL NOTE: You should change the include parameter at the top of the script
+ * for your own institution. A general outline is provided just for testing purposes.
+ *
+ ************************************************************************************/
 
 /**
  *  The core of the logic to make appropriate changes to the document.
@@ -60,7 +69,7 @@ function (mutations, mi)
  *  Heart of the logic for printing data from the Colleague server. Does so by
  *  downloading data via a given URL and putting it into an iframe and calling
  *  the browser's print() function.
- *  @param fileUrl  A URL provided as a string. 
+ *  @param fileUrl  A URL provided as a string.
  */
 function quickPrint(fileUrl)
 {
