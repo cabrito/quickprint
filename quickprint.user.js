@@ -1,21 +1,12 @@
 // ==UserScript==
-// @name     			Colleague Quick Print
+// @name     			Colleague Quickprint
 // @author			cabrito
 // @description 		Removes the requirement of Colleague UI to go through Adobe Reader to print.
-// @version  			1.2
-// @updateURL			https://github.com/cabrito/quickprint/raw/master/quickprint.user.js
-// @downloadURL			https://github.com/cabrito/quickprint/raw/master/quickprint.user.js
+// @version  			1.1
 // @include  			https://*.edu/UI/home/*
 // @require 			https://code.jquery.com/jquery-2.2.4.min.js
 // @grant    			none
 // ==/UserScript==
-
-/*************************************************************************************
- *
- * SPECIAL NOTE: You should change the include parameter at the top of the script
- * for your own institution. A general outline is provided just for testing purposes.
- *
- ************************************************************************************/
 
 /**
  *  The core of the logic to make appropriate changes to the document.
