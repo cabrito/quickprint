@@ -1,11 +1,12 @@
 // ==UserScript==
-// @name     			Colleague Quickprint
-// @author			cabrito
-// @description 		Removes the requirement of Colleague UI to go through Adobe Reader to print.
-// @version  			1.1
-// @include  			https://*.edu/UI/home/*
-// @require 			https://code.jquery.com/jquery-2.2.4.min.js
-// @grant    			none
+// @name                Colleague Quickprint
+// @author              cabrito
+// @namespace           https://github.com/cabrito/quickprint/
+// @description         Removes the requirement of Colleague UI to go through Adobe Reader to print.
+// @version             1.2
+// @include             https://*.edu*/UI/home/*
+// @require             https://code.jquery.com/jquery-2.2.4.min.js
+// @grant               GM_info
 // ==/UserScript==
 
 /**
@@ -82,7 +83,7 @@ function quickPrint(fileUrl)
                 style: "border: none",
             }).appendTo($(iframe).contents().find("body"));
 
-            $(iframe).contents().find("#textData").text(data);
+            $(iframe).contents().find("#textData").text(formatData(data));
 
             $(iframe).get(0).contentWindow.print();
         });
@@ -98,6 +99,25 @@ function isPdf(url)
 {
     var extension = url.substring(url.lastIndexOf('.') + 1, url.lastIndexOf('?') );
     return (extension === "pdf");
+}
+
+/**
+ *	Fixes the problem encountered when the AUX code prints at the top of RGN statements.
+ *	@param	data	Text data provided from Colleague
+ *	@return				Either the same input text, or all the text after the first pagebreak.
+ */
+function formatData(data)
+{
+  	// Uses regexp to remove all whitespace characters globally in the data.
+    var newStr = data.replace(/\s/g, '');
+
+  	// In RGN statements, the first non-whitespace character is "#". We skip everything until the first pagebreak \f
+    if (newStr.charAt(0) !== "#")
+    {
+        return data;
+    } else {
+        return data.substring(data.indexOf("\f"));
+    }
 }
 
 /* Begin document observation */
