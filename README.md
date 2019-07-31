@@ -9,15 +9,14 @@ The script is compatible with [Greasemonkey](https://addons.mozilla.org/en-US/fi
 Instructions to install this script are given for Greasemonkey on Firefox; however, installation into Tampermonkey is relatively the same.
 
 0. Before anything else, install Greasemonkey if you haven't already.
-1. Copy all of the contents of `quickprint.js` from the GitHub repository.
-2. Now, locate Greasmonkey in your browser and click it to reveal the menu.
+1. Next, [visit the Raw data for](https://github.com/cabrito/quickprint/raw/master/quickprint.user.js) `quickprint.user.js`. This should automagically activate Greasemonkey (or Tampermonkey!) that you're trying to install a new script.
 
-<img src="img/gm.png"/>
+<img src="img/in.png"/>
 
-3. Click the option that says "**New User Script**".
-4. From here, paste the contents of `quickprint.js` into this window.
-5. **IMPORTANT**: You will need to replace the link at the top with your Colleague UI link. This is the URL you see in your browser when using Colleague.
-6. Save the script by clicking "**Save**"
+2. Allow the script to install.
+3. (Optional) Update the `@include` URL to be specific for your domain if it doesn't match yours.
+4. (Optional) If your institution does not have have the AUX printing enabled on documents, you may erase all the contents of the function `formatData` in the code and replace it with `return data;` 
+5. That's it! You're ready to go!
 
 ## Usage
 
@@ -29,10 +28,10 @@ Clicking the "Quick Print" button immediately pops up the browser's print window
 
 *_The default "Export PDF" button is still available in the event that the user prefers to utilize this option instead._
 
-## Fixing the "about:blank" issue
+## Fixing the "about:blank" (or similar) issue
 
 The goal of this script is to be as responsive and simple as possible for future maintenance. Due to the noninvasive nature of this script, there is a small issue that arises when printing invoices. In particular, each invoice printed will display the web address of the page printed. This issue cannot be fixed in a way that plays nicely across browsers. The best solution is to disable printing of the URL in the print options dialog:
 
 <img src="img/po.png" />
 
-Change this option to "--blank--". Invoices will no longer display the unsightly "`about:blank`" tag. 
+Change this option to "--blank--". Invoices will no longer display the unsightly "`about:blank`" tag. When printing from Chrome, this option exists natively in the printing pop-up already under "**More settings**", and unchecking "**Headers and footers**".
